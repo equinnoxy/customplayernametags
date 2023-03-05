@@ -6,7 +6,7 @@
 
 #include <a_samp>
 #include <streamer>
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
  
 #define NT_DISTANCE 25.0 // Nametag render distance
  
@@ -17,7 +17,7 @@ hook OnGameModeInit()
     ShowNameTags(0);
     print("--- Custom nametags by Nyzenic loaded. Edited by Bork ---");
     // OnPlayerUpdate causes lag and OnPlayer(Take/Give)Damage doesn't work with it
-    SetTimer("UpdateNametag", 1000, true); // So we're using a timer, change the interval to what you want
+    SetTimer("UpdateNametag", 90, true); // So we're using a timer, change the interval to what you want
     return 1;
 }
 
@@ -29,27 +29,27 @@ static GetHealthDots(playerid)
     GetPlayerHealth(playerid, HP);
  
     if(HP >= 100)
-        dots = "••••••••••";
+        dots = "----------";
     else if(HP >= 90)
-        dots = "•••••••••{660000}•";
+        dots = "---------{303030}-";
     else if(HP >= 80)
-        dots = "••••••••{660000}••";
+        dots = "--------{303030}--";
     else if(HP >= 70)
-        dots = "•••••••{660000}•••";
+        dots = "-------{303030}---";
     else if(HP >= 60)
-        dots = "••••••{660000}••••";
+        dots = "------{303030}----";
     else if(HP >= 50)
-        dots = "•••••{660000}•••••";
+        dots = "-----{303030}-----";
     else if(HP >= 40)
-        dots = "••••{660000}••••••";
+        dots = "----{303030}------";
     else if(HP >= 30)
-        dots = "•••{660000}•••••••";
+        dots = "---{303030}-------";
     else if(HP >= 20)
-        dots = "••{660000}••••••••";
+        dots = "--{303030}--------";
     else if(HP >= 10)
-        dots = "•{660000}•••••••••";
+        dots = "-{303030}---------";
     else if(HP >= 0)
-        dots = "{660000}••••••••••";
+        dots = "{303030}----------";
  
     return dots;
 }
@@ -62,27 +62,27 @@ static GetArmorDots(playerid)
     GetPlayerArmour(playerid, AR);
  
     if(AR >= 100)
-        dots = "••••••••••";
+        dots = "----------";
     else if(AR >= 90)
-        dots = "•••••••••{666666}•";
+        dots = "---------{303030}-";
     else if(AR >= 80)
-        dots = "••••••••{666666}••";
+        dots = "--------{303030}--";
     else if(AR >= 70)
-        dots = "•••••••{666666}•••";
+        dots = "-------{303030}---";
     else if(AR >= 60)
-        dots = "••••••{666666}••••";
+        dots = "------{303030}----";
     else if(AR >= 50)
-        dots = "•••••{666666}•••••";
+        dots = "-----{303030}-----";
     else if(AR >= 40)
-        dots = "••••{666666}••••••";
+        dots = "----{303030}------";
     else if(AR >= 30)
-        dots = "•••{666666}•••••••";
+        dots = "---{303030}-------";
     else if(AR >= 20)
-        dots = "••{666666}••••••••";
+        dots = "--{303030}--------";
     else if(AR >= 10)
-        dots = "•{666666}•••••••••";
+        dots = "-{303030}---------";
     else if(AR >= 0)
-        dots = "{666666}••••••••••";
+        dots = "{303030}----------";
  
     return dots;
 }
@@ -103,7 +103,7 @@ hook OnPlayerDisconnect(playerid, reason)
 forward UpdateNametag();
 public UpdateNametag()
 {
-    for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i = 0, j = MAX_PLAYERS; i <= j; i++)
     {
         if(IsPlayerConnected(i))
         {
@@ -112,11 +112,11 @@ public UpdateNametag()
             GetPlayerName(i, playername, sizeof(playername));
             if(armour > 1.0)
             {
-                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, playername, i, GetArmorDots(i), GetHealthDots(i));
+                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{FFFFFF}%s\n{F60667}%s", GetPlayerColor(i) >>> 8, playername, i, GetArmorDots(i), GetHealthDots(i));
             }
             else
             {
-                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{FF0000}%s", GetPlayerColor(i) >>> 8, playername, i, GetHealthDots(i));
+                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{F60667}%s", GetPlayerColor(i) >>> 8, playername, i, GetHealthDots(i));
             }
             UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
         }

@@ -34,7 +34,7 @@ It also brings a nice cool look to your nametags!
 Simply install to your project:
 
 ```bash
-sampctl package install infin1tyy/customplayernametags
+sampctl package install equinnoxy/customplayernametags
 ```
 
 Include in your code and begin using the library:
